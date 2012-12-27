@@ -1,12 +1,14 @@
 <resources>
 
     <string name="app_name">Игровой Автомат</string>
-    <string name="title_activity_main">Фрукты</string>
+    <string name="title_activity_main">Фруктовый автомат</string>
     <string name="ImageDescription">Descript</string>
     <color name="bgrColor">#1088F1</color>
     <string name="btnBet">Ставка</string>
     <string name="btnStart">Запустить автомат</string>
-    <string name="wordBalance">Баланс:</string>
+    <string name="wordBalance">Баланс:  </string>
     <string name="Menu_AddMoney">Получить деньги</string>
+    <string name="betUp">+</string>
+    <string name="betDown">-</string>
 
 </resources>

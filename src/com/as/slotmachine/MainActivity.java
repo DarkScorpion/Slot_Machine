@@ -46,9 +46,15 @@ public class MainActivity extends Activity {
         tvBalance = (TextView)findViewById(R.id.textViewBalance);
     }
     //Нажатие на кнопку повышения ставки
-    public void btnBet_Click(View v)
+    public void btnBetUp_Click(View v)
     {
     	bet+=5;
+    	tvBet.setText("$"+bet);
+    }
+    //Нажатие на кнопку понижения ставки
+    public void btnBetDown_Click(View v)
+    {
+    	bet-=5;
     	tvBet.setText("$"+bet);
     }
     //Нажатие на кнопку запуска автомата
