@@ -13,13 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity 
+{
+	final static int StandartBet=5;
 	Random rndNum= new Random();
 	int imageIDSize,i,n=3;
 	int bet=5;
 	int balance=100;
-	Button btnBet,btnStart;
+	Button btnBetUp,btnBetDown,btnStart;
 	TextView tvBet, tvBalance;
 	//Массив сссылок на картинки
 	private int [] imageId = {
@@ -40,7 +41,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //Связывание UI  и переменных
         imageIDSize = imageId.length;
-        btnBet = (Button)findViewById(R.id.buttonBet);
+        btnBetUp = (Button)findViewById(R.id.btnBetUp);
+        btnBetDown = (Button)findViewById(R.id.btnBetDown);
         btnStart = (Button)findViewById(R.id.buttonStart);
         tvBet = (TextView)findViewById(R.id.textViewBet);
         tvBalance = (TextView)findViewById(R.id.textViewBalance);
@@ -48,26 +50,30 @@ public class MainActivity extends Activity {
     //Нажатие на кнопку повышения ставки
     public void btnBetUp_Click(View v)
     {
-    	bet+=5;
-    	tvBet.setText("$"+bet);
+    	if(bet<5000)
+    	{
+    		bet+=StandartBet;
+    		tvBet.setText("$"+bet);
+    	}
+    	else ShowMessage("Дальше повысить ставку нельзя");
     }
     //Нажатие на кнопку понижения ставки
     public void btnBetDown_Click(View v)
-    {
-    	bet-=5;
-    	tvBet.setText("$"+bet);
+    {	if(bet-StandartBet>0)
+		{
+			bet-=StandartBet;
+			tvBet.setText("$"+bet);
+		}
+	else ShowMessage("Дальше понизить ставку нельзя");
     }
     //Нажатие на кнопку запуска автомата
     public void btnStart_Click(View v)
     {
-    	if (balance-bet >=0 )//Проверка баланса
+    	if (balance-bet >=0 )//Проверка баланса с вычетом ставки
     	{
     		balance-=bet;
     		tvBalance.setText("$"+balance);
     		StartGame();
-    		bet=5;
-    		tvBet.setText("$"+bet);
-    		
     	}
     		else 
     		{
@@ -101,7 +107,6 @@ public class MainActivity extends Activity {
     		ShowMessage("Ваш выигрыш: $"+prize);
     		AddMoney(prize);
     	}
-    	
     }
     //Функция проверки выигрыша
     public int CheckPrize (int imageNum[])

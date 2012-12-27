@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="46dp"
         android:background="@color/bgrColor" >
 
         <ImageView
@@ -38,9 +38,9 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp" >
+        android:layout_marginTop="30dp" >
 
         <TableRow
             android:id="@+id/tableRow1"
@@ -48,26 +48,32 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/buttonBet"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnBetDawn"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:onClick="btnBet_Click"
-                android:text="@string/btnBet" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="btnBet_Click"
-                android:text="  "
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_weight="1"
+                android:onClick="btnBetDown_Click"
+                android:text="@string/betDown" />
 
             <TextView
                 android:id="@+id/textViewBet"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="$0"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="$5"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Button
+                android:id="@+id/btnBetUp"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="btnBetUp_Click"
+                android:text="@string/betUp"
+                android:width="5dp" />
         </TableRow>
 
         <TableRow
@@ -94,14 +100,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/wordBalance"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="   "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
@@ -109,6 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:gravity="center"
                 android:text="$100"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </TableRow>

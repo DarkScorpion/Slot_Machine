@@ -6,7 +6,7 @@
     <color name="bgrColor">#1088F1</color>
     <string name="btnBet">Ставка</string>
     <string name="btnStart">Запустить автомат</string>
-    <string name="wordBalance">Баланс:  </string>
+    <string name="wordBalance">Баланс:    </string>
     <string name="Menu_AddMoney">Получить деньги</string>
     <string name="betUp">+</string>
     <string name="betDown">-</string>

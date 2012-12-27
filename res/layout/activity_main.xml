@@ -48,9 +48,9 @@
             android:layout_height="wrap_content" >
 
             <Button
-                android:id="@+id/btnBetDawn"
+                android:id="@+id/btnBetDown"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="btnBetDown_Click"
@@ -58,7 +58,7 @@
 
             <TextView
                 android:id="@+id/textViewBet"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
@@ -68,13 +68,12 @@
             <Button
                 android:id="@+id/btnBetUp"
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
+                android:layout_weight="1"
                 android:onClick="btnBetUp_Click"
                 android:text="@string/betUp"
                 android:width="5dp" />
-
         </TableRow>
 
         <TableRow
@@ -111,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:gravity="right"
+                android:gravity="center"
                 android:text="$100"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
