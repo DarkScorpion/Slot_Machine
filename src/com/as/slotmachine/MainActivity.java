@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity 
 {
 	final static int StandartBet=5;
-	Random rndNum= new Random();
+	Random rndNum = new Random();
 	int imageIDSize,i,n=3;
 	int bet=5;
 	int balance=100;
@@ -50,7 +50,7 @@ public class MainActivity extends Activity
     //Нажатие на кнопку повышения ставки
     public void btnBetUp_Click(View v)
     {
-    	if(bet<5000)
+    	if(bet<5000) //Проверка на максимальную ставку
     	{
     		bet+=StandartBet;
     		tvBet.setText("$"+bet);
@@ -59,12 +59,13 @@ public class MainActivity extends Activity
     }
     //Нажатие на кнопку понижения ставки
     public void btnBetDown_Click(View v)
-    {	if(bet-StandartBet>0)
+    {	
+    	if(bet-StandartBet>0) //Проверка на минимальную ставку
 		{
 			bet-=StandartBet;
 			tvBet.setText("$"+bet);
 		}
-	else ShowMessage("Дальше понизить ставку нельзя");
+    	else ShowMessage("Дальше понизить ставку нельзя");
     }
     //Нажатие на кнопку запуска автомата
     public void btnStart_Click(View v)
@@ -121,7 +122,7 @@ public class MainActivity extends Activity
     {
     Toast toast1 = Toast.makeText(getApplicationContext(), 
 			   s, Toast.LENGTH_SHORT);
-	toast1.setGravity(Gravity.CENTER, 0, 0); //задание положение на экране
+	toast1.setGravity(Gravity.CENTER, 0, 0);
 	toast1.show();
     }
     
@@ -129,7 +130,7 @@ public class MainActivity extends Activity
     public void AddMoney(int money)
     {
     	balance+=money;
-        tvBalance.setText("$"+balance);
+        tvBalance.setText("$"+balance); 
     }
     
     @Override
