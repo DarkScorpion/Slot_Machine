@@ -49,7 +49,7 @@
 
             <Button
                 android:id="@+id/btnBetDown"
-                style="?android:attr/buttonStyleSmall"
+                style="@style/ButtonTheme"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -67,7 +67,7 @@
 
             <Button
                 android:id="@+id/btnBetUp"
-                style="?android:attr/buttonStyleSmall"
+                style="@style/ButtonTheme"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -87,6 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:onClick="btnStart_Click"
                 android:text="@string/btnStart" />

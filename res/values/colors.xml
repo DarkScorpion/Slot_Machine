@@ -3,8 +3,8 @@
 <resources>
 <color name="button_focused_color_start">#7FA40E</color> 
 <color name="button_focused_color_end">#B90091</color> 
-<color name="button_normal_color_start">#B90091</color> 
-<color name="button_normal_color_end">#B900FF</color> 
+<color name="button_normal_color_start">#3a458e</color> 
+<color name="button_normal_color_end">#3a458e</color> 
 <color name="button_pressed_color_start">#9C02A7</color> 
 <color name="button_pressed_color_end">#9C0200</color> 
 </resources>
