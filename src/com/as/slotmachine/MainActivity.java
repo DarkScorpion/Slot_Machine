@@ -16,12 +16,14 @@ import android.widget.Toast;
 public class MainActivity extends Activity 
 {
 	final static int StandartBet=5;
+	final static int MaximalBet=1000;
 	Random rndNum = new Random();
-	int imageIDSize,i,n=3;
 	int bet=5;
 	int balance=100;
+	int imageIDSize,i,n=3;
 	Button btnBetUp,btnBetDown,btnStart;
 	TextView tvBet, tvBalance;
+	ImageView [] ivFruit = null;
 	//Массив сссылок на картинки
 	private int [] imageId = {
 			R.drawable.fruit00, //Нулевая фишка
@@ -50,7 +52,7 @@ public class MainActivity extends Activity
     //Нажатие на кнопку повышения ставки
     public void btnBetUp_Click(View v)
     {
-    	if(bet<5000) //Проверка на максимальную ставку
+    	if(bet<MaximalBet) //Проверка на максимальную ставку
     	{
     		bet+=StandartBet;
     		tvBet.setText("$"+bet);

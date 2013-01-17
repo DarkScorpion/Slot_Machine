@@ -20,7 +20,7 @@ public final class R {
         public static final int button_pressed_color_start=0x7f060004;
     }
     public static final class drawable {
-        public static final int coins=0x7f020000;
+        public static final int coin_balance=0x7f020000;
         public static final int fruit00=0x7f020001;
         public static final int fruit01=0x7f020002;
         public static final int fruit02=0x7f020003;
@@ -44,12 +44,13 @@ public final class R {
         public static final int imageView1=0x7f090001;
         public static final int imageView2=0x7f090002;
         public static final int imageView3=0x7f090003;
+        public static final int imageView4=0x7f09000b;
         public static final int linearLayout1=0x7f090000;
-        public static final int menu_AddMoney=0x7f09000e;
+        public static final int menu_AddMoney=0x7f09000f;
         public static final int tableRow1=0x7f090004;
         public static final int tableRow2=0x7f090008;
         public static final int tableRow3=0x7f09000a;
-        public static final int textView2=0x7f09000b;
+        public static final int textView2=0x7f09000e;
         public static final int textViewBalance=0x7f09000c;
         public static final int textViewBet=0x7f090006;
     }
