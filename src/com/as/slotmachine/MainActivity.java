@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,15 +17,15 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity 
 {
-	final static int StandartBet=5;
-	final static int MaximalBet=1000;
+	final static int StandartBet = 5;
+	final static int MaximalBet = 1000;
 	Random rndNum = new Random();
 	int bet=5;
 	int balance=100;
 	int imageIDSize,i,n=3;
 	Button btnBetUp,btnBetDown,btnStart;
 	TextView tvBet, tvBalance;
-	ImageView [] ivFruit = null;
+	//ImageView [] ivFruit = null;
 	//Массив сссылок на картинки
 	private int [] imageId = {
 			R.drawable.fruit00, //Нулевая фишка
@@ -89,6 +91,7 @@ public class MainActivity extends Activity
     //Функция запуска автомата с проверкой выигрыша
     public void StartGame()
     {
+    	Animation ScaleAnim;
     	int prize;
     	int randBuffer[] = new int [n];
     	ImageView [] ivFruit = {
@@ -101,6 +104,9 @@ public class MainActivity extends Activity
     	{
     		randBuffer[i] = rndNum.nextInt(imageIDSize);
         	ivFruit[i].setImageResource(imageId[randBuffer[i]]);
+        	//Запуск анимации
+        	ScaleAnim = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
+        	ivFruit[i].startAnimation(ScaleAnim);
     	}
     	//Проверка выигрыша и в случае победы вывод сообщения на экран
     	prize=CheckPrize(randBuffer)*bet;

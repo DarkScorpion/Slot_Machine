@@ -60,7 +60,7 @@
                 android:id="@+id/textViewBet"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="center_horizontal"
                 android:minWidth="20dp"
                 android:text="$5"
@@ -104,8 +104,8 @@
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="15dp"
+                android:contentDescription="@string/ImageDescription"
                 android:src="@drawable/coin_balance" />
 
             <TextView
@@ -113,8 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="15dp"
                 android:gravity="center"
                 android:text="$100"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
