@@ -40,7 +40,6 @@ public final class R {
         public static final int newbtn_pressed=0x7f02000e;
     }
     public static final class id {
-        public static final int btnBetDawn=0x7f0a000d;
         public static final int btnBetDown=0x7f0a0005;
         public static final int btnBetUp=0x7f0a0007;
         public static final int buttonStart=0x7f0a0009;
@@ -49,11 +48,10 @@ public final class R {
         public static final int imageView3=0x7f0a0003;
         public static final int imageView4=0x7f0a000b;
         public static final int linearLayout1=0x7f0a0000;
-        public static final int menu_AddMoney=0x7f0a000f;
+        public static final int menu_AddMoney=0x7f0a000d;
         public static final int tableRow1=0x7f0a0004;
         public static final int tableRow2=0x7f0a0008;
         public static final int tableRow3=0x7f0a000a;
-        public static final int textView2=0x7f0a000e;
         public static final int textViewBalance=0x7f0a000c;
         public static final int textViewBet=0x7f0a0006;
     }
