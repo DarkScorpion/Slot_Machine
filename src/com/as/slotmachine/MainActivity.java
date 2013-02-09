@@ -4,6 +4,9 @@ import java.util.Random;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +28,6 @@ public class MainActivity extends Activity
 	int imageIDSize,i,n=3;
 	Button btnBetUp,btnBetDown,btnStart;
 	TextView tvBet, tvBalance;
-	//ImageView [] ivFruit = null;
 	//Массив сссылок на картинки
 	private int [] imageId = {
 			R.drawable.fruit00, //Нулевая фишка
@@ -162,6 +164,25 @@ public class MainActivity extends Activity
        super.onPause();
        Music.stop(this);
     }
+	
+	
+	//Создание окна выхода из приложения
+	@Override
+	public void onBackPressed() 
+	{
+		new AlertDialog.Builder(this)
+		.setTitle("Выход из приложения")
+		.setMessage("Вы действительно хотите выйти?")
+		.setNegativeButton("НЕТ", null)
+		.setPositiveButton("ДА", new OnClickListener() 
+		{
+		public void onClick(DialogInterface arg0, int arg1) 
+		{
+			finish(); //Очищает память от данного Activity
+		}
+		}).create().show();
+	}
+	
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -170,7 +191,7 @@ public class MainActivity extends Activity
         switch (item.getItemId()) 
     	{
         case R.id.menu_AddMoney:
-            AddMoney(250);
+            AddMoney(500);
             return true;
         default:
             return super.onOptionsItemSelected(item);
