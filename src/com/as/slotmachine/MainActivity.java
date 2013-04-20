@@ -1,12 +1,13 @@
 package com.as.slotmachine;
 //Игровой автомат
 import java.util.Random;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences.Editor;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,13 +24,16 @@ public class MainActivity extends Activity
 	final static int StandartBet = 5;
 	final static int MaximalBet = 1000;
 	Random rndNum = new Random();
-	int bet=5;
-	int balance=100;
-	int imageIDSize,i,n=3;
-	Button btnBetUp,btnBetDown,btnStart;
+	int bet = 5;
+	int balance;
+	int imageIdSize,i;
+	int FruitCount = 3;
+	SharedPreferences sPref;
 	TextView tvBet, tvBalance;
+	Button btnBetUp,btnBetDown,btnStart;
 	//Массив сссылок на картинки
-	private int [] imageId = {
+	private int [] imageId = 
+			{
 			R.drawable.fruit00, //Нулевая фишка
 			R.drawable.fruit01,
 			R.drawable.fruit02,
@@ -46,17 +50,18 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Связывание UI  и переменных
-        imageIDSize = imageId.length;
+        imageIdSize = imageId.length;
         btnBetUp = (Button)findViewById(R.id.btnBetUp);
         btnBetDown = (Button)findViewById(R.id.btnBetDown);
         btnStart = (Button)findViewById(R.id.buttonStart);
         tvBet = (TextView)findViewById(R.id.textViewBet);
         tvBalance = (TextView)findViewById(R.id.textViewBalance);
+        LoadBalance();
     }
     //Нажатие на кнопку повышения ставки
     public void btnBetUp_Click(View v)
     {
-    	if(bet<MaximalBet) //Проверка на максимальную ставку
+    	if(bet+StandartBet < MaximalBet) //Проверка на максимальную ставку
     	{
     		bet+=StandartBet;
     		tvBet.setText("$"+bet);
@@ -93,18 +98,18 @@ public class MainActivity extends Activity
     //Функция запуска автомата с проверкой выигрыша
     public void StartGame()
     {
-    	Animation ScaleAnim;
     	int prize;
-    	int randBuffer[] = new int [n];
+    	Animation ScaleAnim;
+    	int randBuffer[] = new int [FruitCount];
     	ImageView [] ivFruit = {
     			(ImageView)findViewById(R.id.imageView1),
 				(ImageView)findViewById(R.id.imageView2),
 				(ImageView)findViewById(R.id.imageView3)
 				};
     	//Создание случайного набора чисел и вывод в виде картинок.
-    	for(i=0;i<n;i++)
+    	for(i=0;i<FruitCount;i++)
     	{
-    		randBuffer[i] = rndNum.nextInt(imageIDSize);
+    		randBuffer[i] = rndNum.nextInt(imageIdSize);
         	ivFruit[i].setImageResource(imageId[randBuffer[i]]);
         	//Запуск анимации
         	ScaleAnim = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
@@ -162,9 +167,9 @@ public class MainActivity extends Activity
     protected void onPause() 
     {
        super.onPause();
+       SaveBalance(balance);
        Music.stop(this);
     }
-	
 	
 	//Создание окна выхода из приложения
 	@Override
@@ -183,6 +188,23 @@ public class MainActivity extends Activity
 		}).create().show();
 	}
 	
+	
+	public void SaveBalance(int balance)
+	{
+		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
+		Editor ed = sPref.edit();
+		ed.putInt("Balance", balance);
+		ed.commit();
+	}
+	
+	public void LoadBalance()
+	{
+		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
+		balance =  sPref.getInt("Balance", 150);
+		tvBalance.setText("$"+balance);
+		
+	}
+	
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -192,6 +214,7 @@ public class MainActivity extends Activity
     	{
         case R.id.menu_AddMoney:
             AddMoney(500);
+            Music.sound(this, R.raw.kassa);
             return true;
         default:
             return super.onOptionsItemSelected(item);

@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 public class Music 
 {
 	private static MediaPlayer mp = null;
+	private static MediaPlayer sp = null;
 	
 	public static void play(Context context, int resource) 
 	{
@@ -17,7 +18,8 @@ public class Music
 	
 	public static void sound (Context context, int resource) 
 	{
-		MediaPlayer sp;
+		//int soundID = sp.load(context, resource,1);
+	    //sp.play(soundID, 1, 0, 1, 0, 1f);
 	    sp = MediaPlayer.create(context, resource);
 	    sp.start();
 	}
