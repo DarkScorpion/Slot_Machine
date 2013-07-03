@@ -1,0 +1,1 @@
+Slotmachine writing on android, for fun.

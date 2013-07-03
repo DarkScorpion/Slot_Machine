@@ -21,16 +21,18 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity 
 {
-	final static int StandartBet = 5;
-	final static int MaximalBet = 1000;
-	Random rndNum = new Random();
+	final static int FRUIT_NUMBER = 3;
+	final static int STANDART_BET = 5;
+	final static int MAXIMAL_BET = 1000;
+	int i;
 	int bet = 5;
 	int balance;
-	int imageIdSize,i;
-	int FruitCount = 3;
+	int imageIdSize;
+	Random rndNum = new Random();
 	SharedPreferences sPref;
 	TextView tvBet, tvBalance;
 	Button btnBetUp,btnBetDown,btnStart;
+	
 	//Массив сссылок на картинки
 	private int [] imageId = 
 			{
@@ -61,9 +63,9 @@ public class MainActivity extends Activity
     //Нажатие на кнопку повышения ставки
     public void btnBetUp_Click(View v)
     {
-    	if(bet+StandartBet < MaximalBet) //Проверка на максимальную ставку
+    	if(bet+STANDART_BET < MAXIMAL_BET) //Проверка на максимальную ставку
     	{
-    		bet+=StandartBet;
+    		bet += STANDART_BET;
     		tvBet.setText("$"+bet);
     	}
     	else ShowMessage("Дальше повысить ставку нельзя");
@@ -71,9 +73,9 @@ public class MainActivity extends Activity
     //Нажатие на кнопку понижения ставки
     public void btnBetDown_Click(View v)
     {	
-    	if(bet-StandartBet>0) //Проверка на минимальную ставку
+    	if(bet-STANDART_BET > 0) //Проверка на минимальную ставку
 		{
-			bet-=StandartBet;
+			bet -= STANDART_BET;
 			tvBet.setText("$"+bet);
 		}
     	else ShowMessage("Дальше понизить ставку нельзя");
@@ -83,7 +85,7 @@ public class MainActivity extends Activity
     {
     	if (balance-bet >=0 )//Проверка баланса с вычетом ставки
     	{
-    		balance-=bet;
+    		balance -= bet;
     		tvBalance.setText("$"+balance);
     		StartGame();
     	}
@@ -100,14 +102,14 @@ public class MainActivity extends Activity
     {
     	int prize;
     	Animation ScaleAnim;
-    	int randBuffer[] = new int [FruitCount];
+    	int randBuffer[] = new int [FRUIT_NUMBER];
     	ImageView [] ivFruit = {
     			(ImageView)findViewById(R.id.imageView1),
 				(ImageView)findViewById(R.id.imageView2),
 				(ImageView)findViewById(R.id.imageView3)
 				};
     	//Создание случайного набора чисел и вывод в виде картинок.
-    	for(i=0;i<FruitCount;i++)
+    	for(i=0;i<FRUIT_NUMBER;i++)
     	{
     		randBuffer[i] = rndNum.nextInt(imageIdSize);
         	ivFruit[i].setImageResource(imageId[randBuffer[i]]);
@@ -116,7 +118,7 @@ public class MainActivity extends Activity
         	ivFruit[i].startAnimation(ScaleAnim);
     	}
     	//Проверка выигрыша и в случае победы вывод сообщения на экран
-    	prize=CheckPrize(randBuffer)*bet;
+    	prize = CheckPrize(randBuffer)*bet;
     	if (prize != 0) 
     	{
     		Music.sound(this, R.raw.slotcoin);
@@ -144,15 +146,8 @@ public class MainActivity extends Activity
     //Добавление денег
     public void AddMoney(int money)
     {
-    	balance+=money;
+    	balance += money;
         tvBalance.setText("$"+balance); 
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) 
-    {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
     }
 
     //Включение музыки при возврате или заходе в игру
@@ -162,6 +157,7 @@ public class MainActivity extends Activity
        super.onResume();
        Music.play(this, R.raw.main);
     }
+    
     //Отключение музыки при паузе или выходе
     @Override
     protected void onPause() 
@@ -188,7 +184,7 @@ public class MainActivity extends Activity
 		}).create().show();
 	}
 	
-	
+	//Сохранение данных
 	public void SaveBalance(int balance)
 	{
 		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
@@ -196,16 +192,21 @@ public class MainActivity extends Activity
 		ed.putInt("Balance", balance);
 		ed.commit();
 	}
-	
+	//Загрузка сохранённых данных
 	public void LoadBalance()
 	{
 		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
-		balance =  sPref.getInt("Balance", 150);
+		balance = sPref.getInt("Balance", 150); //150 это стартовый баланс при первом запуске прилжения
 		tvBalance.setText("$"+balance);
-		
 	}
 	
-    
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) 
+    {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+	
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
