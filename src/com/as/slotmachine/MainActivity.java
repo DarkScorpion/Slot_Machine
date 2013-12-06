@@ -24,6 +24,7 @@ public class MainActivity extends Activity
 	final static int FRUIT_NUMBER = 3;
 	final static int STANDART_BET = 5;
 	final static int MAXIMAL_BET = 1000;
+	
 	int i;
 	int bet = 5;
 	int balance;
@@ -58,7 +59,7 @@ public class MainActivity extends Activity
         btnStart = (Button)findViewById(R.id.buttonStart);
         tvBet = (TextView)findViewById(R.id.textViewBet);
         tvBalance = (TextView)findViewById(R.id.textViewBalance);
-        LoadBalance();
+        LoadBalance(); //Загружаем ранее сохронённый баланс
     }
     //Нажатие на кнопку повышения ставки
     public void btnBetUp_Click(View v)
@@ -83,7 +84,7 @@ public class MainActivity extends Activity
     //Нажатие на кнопку запуска автомата
     public void btnStart_Click(View v)
     {
-    	if (balance-bet >=0 )//Проверка баланса с вычетом ставки
+    	if (balance-bet >= 0)//Проверка баланса с вычетом ставки
     	{
     		balance -= bet;
     		tvBalance.setText("$"+balance);
@@ -95,7 +96,6 @@ public class MainActivity extends Activity
     			bet=5;
         		tvBet.setText("$"+bet);
     		}
-    	
     }
     //Функция запуска автомата с проверкой выигрыша
     public void StartGame()
@@ -137,10 +137,10 @@ public class MainActivity extends Activity
     //Функция вывода сообещния на экран
     public void ShowMessage(String s)
     {
-    Toast toast1 = Toast.makeText(getApplicationContext(), 
+		Toast toast1 = Toast.makeText(getApplicationContext(), 
 			   s, Toast.LENGTH_SHORT);
-	toast1.setGravity(Gravity.CENTER, 0, 0);
-	toast1.show();
+		toast1.setGravity(Gravity.CENTER, 0, 0);
+		toast1.show();
     }
     
     //Добавление денег
@@ -177,17 +177,17 @@ public class MainActivity extends Activity
 		.setNegativeButton("НЕТ", null)
 		.setPositiveButton("ДА", new OnClickListener() 
 		{
-		public void onClick(DialogInterface arg0, int arg1) 
-		{
-			finish(); //Очищает память от данного Activity
-		}
+			public void onClick(DialogInterface arg0, int arg1) 
+			{
+				finish(); //Очищает память от данного Activity
+			}
 		}).create().show();
 	}
 	
 	//Сохранение данных
 	public void SaveBalance(int balance)
 	{
-		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
+		sPref = getSharedPreferences("FruitMachin_data", MODE_PRIVATE);
 		Editor ed = sPref.edit();
 		ed.putInt("Balance", balance);
 		ed.commit();
@@ -196,7 +196,7 @@ public class MainActivity extends Activity
 	public void LoadBalance()
 	{
 		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
-		balance = sPref.getInt("Balance", 150); //150 это стартовый баланс при первом запуске прилжения
+		balance = sPref.getInt("Balance", 150); //150 <-- стартовый баланс при первом запуске
 		tvBalance.setText("$"+balance);
 	}
 	
@@ -213,12 +213,11 @@ public class MainActivity extends Activity
     	// Операции для выбранного пункта меню
         switch (item.getItemId()) 
     	{
-        case R.id.menu_AddMoney:
-            AddMoney(500);
-            Music.sound(this, R.raw.kassa);
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
+			case R.id.menu_AddMoney:
+				AddMoney(500);
+				Music.sound(this, R.raw.kassa);
+				return true;
+			default: return super.onOptionsItemSelected(item);
         }
     }
 }
