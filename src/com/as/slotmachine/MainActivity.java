@@ -26,13 +26,14 @@ public class MainActivity extends Activity
 	final static int MAXIMAL_BET = 1000;
 	
 	int i;
-	int bet = 5;
+	int bet = STANDART_BET;
 	int balance;
-	int imageIdSize;
+	int imageArrSize;
 	Random rndNum = new Random();
 	SharedPreferences sPref;
 	TextView tvBet, tvBalance;
 	Button btnBetUp,btnBetDown,btnStart;
+	Animation ScaleAnim;
 	
 	//Массив сссылок на картинки
 	private int [] imageId = 
@@ -53,12 +54,13 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Связывание UI  и переменных
-        imageIdSize = imageId.length;
+        imageArrSize = imageId.length;
         btnBetUp = (Button)findViewById(R.id.btnBetUp);
         btnBetDown = (Button)findViewById(R.id.btnBetDown);
         btnStart = (Button)findViewById(R.id.buttonStart);
         tvBet = (TextView)findViewById(R.id.textViewBet);
         tvBalance = (TextView)findViewById(R.id.textViewBalance);
+        ScaleAnim = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
         LoadBalance(); //Загружаем ранее сохронённый баланс
     }
     //Нажатие на кнопку повышения ставки
@@ -93,7 +95,7 @@ public class MainActivity extends Activity
     		else 
     		{
     			ShowMessage("У вас недостаточно средств!");
-    			bet=5;
+    			bet = STANDART_BET;
         		tvBet.setText("$"+bet);
     		}
     }
@@ -101,7 +103,6 @@ public class MainActivity extends Activity
     public void StartGame()
     {
     	int prize;
-    	Animation ScaleAnim;
     	int randBuffer[] = new int [FRUIT_NUMBER];
     	ImageView [] ivFruit = {
     			(ImageView)findViewById(R.id.imageView1),
@@ -111,11 +112,9 @@ public class MainActivity extends Activity
     	//Создание случайного набора чисел и вывод в виде картинок.
     	for(i=0;i<FRUIT_NUMBER;i++)
     	{
-    		randBuffer[i] = rndNum.nextInt(imageIdSize);
+    		randBuffer[i] = rndNum.nextInt(imageArrSize);
         	ivFruit[i].setImageResource(imageId[randBuffer[i]]);
-        	//Запуск анимации
-        	ScaleAnim = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
-        	ivFruit[i].startAnimation(ScaleAnim);
+        	ivFruit[i].startAnimation(ScaleAnim); //Запуск анимации
     	}
     	//Проверка выигрыша и в случае победы вывод сообщения на экран
     	prize = CheckPrize(randBuffer)*bet;
@@ -137,10 +136,10 @@ public class MainActivity extends Activity
     //Функция вывода сообещния на экран
     public void ShowMessage(String s)
     {
-		Toast toast1 = Toast.makeText(getApplicationContext(), 
+		Toast msgToast = Toast.makeText(getApplicationContext(), 
 			   s, Toast.LENGTH_SHORT);
-		toast1.setGravity(Gravity.CENTER, 0, 0);
-		toast1.show();
+		msgToast.setGravity(Gravity.CENTER, 0, 0);
+		msgToast.show();
     }
     
     //Добавление денег
