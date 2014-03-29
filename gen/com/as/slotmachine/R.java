@@ -62,8 +62,9 @@ public final class R {
         public static final int activity_main=0x7f090000;
     }
     public static final class raw {
-        public static final int main=0x7f050000;
-        public static final int slotcoin=0x7f050001;
+        public static final int kassa=0x7f050000;
+        public static final int main=0x7f050001;
+        public static final int slotcoin=0x7f050002;
     }
     public static final class string {
         public static final int ImageDescription=0x7f080002;
