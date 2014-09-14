@@ -34,16 +34,16 @@ public class MainActivity extends Activity
 	
 	//Массив сссылок на картинки
 	private int [] imageId = 
-			{
-			R.drawable.fruit00, //Нулевая фишка
-			R.drawable.fruit01,
-			R.drawable.fruit02,
-			R.drawable.fruit03,
-			R.drawable.fruit04,
-			R.drawable.fruit05,
-			R.drawable.fruit06,
-			R.drawable.fruit07
-			};
+	{
+		R.drawable.fruit00, //Нулевая фишка
+		R.drawable.fruit01,
+		R.drawable.fruit02,
+		R.drawable.fruit03,
+		R.drawable.fruit04,
+		R.drawable.fruit05,
+		R.drawable.fruit06,
+		R.drawable.fruit07
+	};
 	
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -68,7 +68,7 @@ public class MainActivity extends Activity
     		bet += STANDART_BET;
     		tvBet.setText("$"+bet);
     	}
-    	else ShowMessage("Дальше повысить ставку нельзя");
+    	else ShowToastMessage("Дальше повысить ставку нельзя");
     }
     //Нажатие на кнопку понижения ставки
     public void btnBetDown_Click(View v)
@@ -78,7 +78,7 @@ public class MainActivity extends Activity
 			bet -= STANDART_BET;
 			tvBet.setText("$"+bet);
 		}
-    	else ShowMessage("Дальше понизить ставку нельзя");
+    	else ShowToastMessage("Дальше понизить ставку нельзя");
     }
     //Нажатие на кнопку запуска автомата
     public void btnStart_Click(View v)
@@ -91,7 +91,7 @@ public class MainActivity extends Activity
     	}
     		else 
     		{
-    			ShowMessage("У вас недостаточно средств!");
+    			ShowToastMessage("У вас недостаточно средств!");
     			bet = STANDART_BET;
         		tvBet.setText("$"+bet);
     		}
@@ -101,12 +101,12 @@ public class MainActivity extends Activity
     {
     	int prize;
     	int randBuffer[] = new int [FRUIT_NUMBER];
-    	ImageView [] ivFruit = {
+    	ImageView ivFruit[] = {
     			(ImageView)findViewById(R.id.imageView1),
 				(ImageView)findViewById(R.id.imageView2),
 				(ImageView)findViewById(R.id.imageView3)
 				};
-    	Animation [] AnimArr = {
+    	Animation AnimArr[] = {
         		AnimationUtils.loadAnimation(this, R.anim.scale_anim),
         		AnimationUtils.loadAnimation(this, R.anim.rotate_anim),
         		AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
@@ -124,7 +124,7 @@ public class MainActivity extends Activity
     	if (prize != 0) 
     	{
     		Music.sound(this, R.raw.slotcoin);
-    		ShowMessage("Ваш выигрыш: $"+prize);
+    		ShowToastMessage("Ваш выигрыш: $"+prize);
     		AddMoney(prize);
     	}
     }
@@ -137,7 +137,7 @@ public class MainActivity extends Activity
     	return 0;
     }
     //Функция вывода сообещния на экран
-    public void ShowMessage(String s)
+    public void ShowToastMessage(String s)
     {
 		Toast msgToast = Toast.makeText(getApplicationContext(), 
 			   s, Toast.LENGTH_SHORT);
