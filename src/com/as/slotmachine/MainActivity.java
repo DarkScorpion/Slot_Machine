@@ -31,7 +31,7 @@ public class MainActivity extends Activity
 	SharedPreferences sPref;
 	TextView tvBet, tvBalance;
 	Button btnBetUp, btnBetDown, btnStart;
-	Animation ScaleAnim;
+	Animation ScaleAnim, RotateAnim, AlphaAnim;
 	
 	//Массив сссылок на картинки
 	private int [] imageId = 
@@ -51,7 +51,7 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Связывание UI  и переменных
+        //Связывание UI и переменных
         imageArrSize = imageId.length;
         btnBetUp = (Button)findViewById(R.id.btnBetUp);
         btnBetDown = (Button)findViewById(R.id.btnBetDown);
@@ -59,6 +59,8 @@ public class MainActivity extends Activity
         tvBet = (TextView)findViewById(R.id.textViewBet);
         tvBalance = (TextView)findViewById(R.id.textViewBalance);
         ScaleAnim = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
+        RotateAnim = AnimationUtils.loadAnimation(this, R.anim.rotate_anim);
+        AlphaAnim = AnimationUtils.loadAnimation(this, R.anim.alpha_anim);
         LoadBalance(); //Загружаем ранее сохронённый баланс
 
     }
@@ -109,12 +111,11 @@ public class MainActivity extends Activity
 				(ImageView)findViewById(R.id.imageView3)
 				};
     	//Создание случайного набора чисел и вывод в виде картинок.
-
     	for(i=0;i<FRUIT_NUMBER;i++)
     	{
     		randBuffer[i] = rndNum.nextInt(imageArrSize);
         	ivFruit[i].setImageResource(imageId[randBuffer[i]]);
-        	ivFruit[i].startAnimation(ScaleAnim); //Запуск анимации
+        	ivFruit[i].startAnimation(RotateAnim); //Запуск анимации
     	}
     	//Проверка выигрыша и в случае победы вывод сообщения на экран
     	prize = CheckPrize(randBuffer)*bet;
