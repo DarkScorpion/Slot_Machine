@@ -105,7 +105,7 @@ public class MainActivity extends Activity
     			(ImageView)findViewById(R.id.imageView1),
 				(ImageView)findViewById(R.id.imageView2),
 				(ImageView)findViewById(R.id.imageView3)
-				};
+		};
     	Animation AnimArr[] = {
         		AnimationUtils.loadAnimation(this, R.anim.scale_anim),
         		AnimationUtils.loadAnimation(this, R.anim.rotate_anim),
