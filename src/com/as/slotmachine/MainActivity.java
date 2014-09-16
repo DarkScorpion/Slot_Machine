@@ -21,206 +21,206 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity 
 {
-	final static int FRUIT_NUMBER = 3;
-	final static int STANDART_BET = 5;
-	final static int MAXIMAL_BET = 1000;
-	
-	int bet = STANDART_BET;
-	int balance, imageArrSize, i;
-	Random rndNum = new Random();
-	SharedPreferences sPref;
-	TextView tvBet, tvBalance;
-	Button btnBetUp, btnBetDown, btnStart;
-	
-	//Массив сссылок на картинки
-	private int [] imageId = 
-	{
-		R.drawable.fruit00, //Нулевая фишка
-		R.drawable.fruit01,
-		R.drawable.fruit02,
-		R.drawable.fruit03,
-		R.drawable.fruit04,
-		R.drawable.fruit05,
-		R.drawable.fruit06,
-		R.drawable.fruit07
-	};
-	
-    @Override
-    public void onCreate(Bundle savedInstanceState) 
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //Связывание UI и переменных
-        imageArrSize = imageId.length;
-        btnBetUp = (Button)findViewById(R.id.btnBetUp);
-        btnBetDown = (Button)findViewById(R.id.btnBetDown);
-        btnStart = (Button)findViewById(R.id.buttonStart);
-        tvBet = (TextView)findViewById(R.id.textViewBet);
-        tvBalance = (TextView)findViewById(R.id.textViewBalance);
-        LoadBalance(); //Загружаем ранее сохронённый баланс
+  final static int FRUIT_NUMBER = 3;
+  final static int STANDART_BET = 5;
+  final static int MAXIMAL_BET = 1000;
+  
+  int bet = STANDART_BET;
+  int balance, imageArrSize, i;
+  Random rndNum = new Random();
+  SharedPreferences sPref;
+  TextView tvBet, tvBalance;
+  Button btnBetUp, btnBetDown, btnStart;
+  
+  //Массив сссылок на картинки
+  private int [] imageId = 
+  {
+    R.drawable.fruit00, //Нулевая фишка
+    R.drawable.fruit01,
+    R.drawable.fruit02,
+    R.drawable.fruit03,
+    R.drawable.fruit04,
+    R.drawable.fruit05,
+    R.drawable.fruit06,
+    R.drawable.fruit07
+  };
+  
+  @Override
+  public void onCreate(Bundle savedInstanceState) 
+  {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    //Связывание UI и переменных
+    imageArrSize = imageId.length;
+    btnBetUp = (Button)findViewById(R.id.btnBetUp);
+    btnBetDown = (Button)findViewById(R.id.btnBetDown);
+    btnStart = (Button)findViewById(R.id.buttonStart);
+    tvBet = (TextView)findViewById(R.id.textViewBet);
+    tvBalance = (TextView)findViewById(R.id.textViewBalance);
+    LoadBalance(); //Загружаем ранее сохронённый баланс
 
-    }
-    //Нажатие на кнопку повышения ставки
-    public void btnBetUp_Click(View v)
+  }
+  //Нажатие на кнопку повышения ставки
+  public void btnBetUp_Click(View v)
+  {
+    if(bet+STANDART_BET < MAXIMAL_BET) //Проверка на максимальную ставку
     {
-    	if(bet+STANDART_BET < MAXIMAL_BET) //Проверка на максимальную ставку
-    	{
-    		bet += STANDART_BET;
-    		tvBet.setText("$"+bet);
-    	}
-    	else ShowToastMessage("Дальше повысить ставку нельзя");
+      bet += STANDART_BET;
+      tvBet.setText("$"+bet);
     }
-    //Нажатие на кнопку понижения ставки
-    public void btnBetDown_Click(View v)
-    {	
-    	if(bet-STANDART_BET > 0) //Проверка на минимальную ставку
-		{
-			bet -= STANDART_BET;
-			tvBet.setText("$"+bet);
-		}
-    	else ShowToastMessage("Дальше понизить ставку нельзя");
-    }
-    //Нажатие на кнопку запуска автомата
-    public void btnStart_Click(View v)
+    else ShowToastMessage("Дальше повысить ставку нельзя");
+  }
+  //Нажатие на кнопку понижения ставки
+  public void btnBetDown_Click(View v)
+  { 
+    if(bet-STANDART_BET > 0) //Проверка на минимальную ставку
     {
-    	if (balance-bet >= 0)//Проверка баланса с вычетом ставки
-    	{
-    		balance -= bet;
-    		tvBalance.setText("$"+balance);
-    		StartGame();
-    	}
-    		else 
-    		{
-    			ShowToastMessage("У вас недостаточно средств!");
-    			bet = STANDART_BET;
-        		tvBet.setText("$"+bet);
-    		}
+      bet -= STANDART_BET;
+      tvBet.setText("$"+bet);
     }
-    //Функция запуска автомата с проверкой выигрыша
-    public void StartGame()
+    else ShowToastMessage("Дальше понизить ставку нельзя");
+  }
+  //Нажатие на кнопку запуска автомата
+  public void btnStart_Click(View v)
+  {
+    if (balance-bet >= 0)//Проверка баланса с вычетом ставки
     {
-    	int prize;
-    	int randBuffer[] = new int [FRUIT_NUMBER];
-    	ImageView ivFruit[] = {
-    			(ImageView)findViewById(R.id.imageView1),
-				(ImageView)findViewById(R.id.imageView2),
-				(ImageView)findViewById(R.id.imageView3)
-		};
-    	Animation AnimArr[] = {
-        		AnimationUtils.loadAnimation(this, R.anim.scale_anim),
-        		AnimationUtils.loadAnimation(this, R.anim.rotate_anim),
-        		AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
-        };
-    	//Создание случайного набора чисел и вывод в виде картинок.
-    	for(i=0;i<FRUIT_NUMBER;i++)
-    	{
-    		randBuffer[i] = rndNum.nextInt(imageArrSize);
-        	ivFruit[i].setImageResource(imageId[randBuffer[i]]);
-        	//Запуск случайной анимации
-        	ivFruit[i].startAnimation(AnimArr[rndNum.nextInt(AnimArr.length)]); 
-    	}
-    	//Проверка выигрыша и в случае победы вывод сообщения на экран
-    	prize = CheckPrize(randBuffer)*bet;
-    	if (prize != 0) 
-    	{
-    		Music.sound(this, R.raw.slotcoin);
-    		ShowToastMessage("Ваш выигрыш: $"+prize);
-    		AddMoney(prize);
-    	}
+      balance -= bet;
+      tvBalance.setText("$"+balance);
+      StartGame();
     }
-    //Функция проверки выигрыша
-    public int CheckPrize (int imageNum[])
+      else 
+      {
+        ShowToastMessage("У вас недостаточно средств!");
+        bet = STANDART_BET;
+        tvBet.setText("$"+bet);
+      }
+  }
+  //Функция запуска автомата с проверкой выигрыша
+  public void StartGame()
+  {
+    int prize;
+    int randBuffer[] = new int [FRUIT_NUMBER];
+    ImageView ivFruit[] = {
+        (ImageView)findViewById(R.id.imageView1),
+        (ImageView)findViewById(R.id.imageView2),
+        (ImageView)findViewById(R.id.imageView3)
+    };
+    Animation AnimArr[] = {
+        AnimationUtils.loadAnimation(this, R.anim.scale_anim),
+        AnimationUtils.loadAnimation(this, R.anim.rotate_anim),
+        AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
+    };
+    //Создание случайного набора чисел и вывод в виде картинок.
+    for(i=0;i<FRUIT_NUMBER;i++)
     {
-    	if (imageNum[0]==imageNum[1] && imageNum[1]==imageNum[2]) return imageNum[1]*2;
-    	if (imageNum[0]==imageNum[1] || imageNum[1]==imageNum[2]) return imageNum[1];
-    	if (imageNum[0]==imageNum[2]) return imageNum[0];
-    	return 0;
+      randBuffer[i] = rndNum.nextInt(imageArrSize);
+      ivFruit[i].setImageResource(imageId[randBuffer[i]]);
+      //Запуск случайной анимации
+      ivFruit[i].startAnimation(AnimArr[rndNum.nextInt(AnimArr.length)]); 
     }
-    //Функция вывода сообещния на экран
-    public void ShowToastMessage(String s)
+    //Проверка выигрыша и в случае победы вывод сообщения на экран
+    prize = CheckPrize(randBuffer)*bet;
+    if (prize != 0) 
     {
-		Toast msgToast = Toast.makeText(getApplicationContext(), 
-			   s, Toast.LENGTH_SHORT);
-		msgToast.setGravity(Gravity.CENTER, 0, 0);
-		msgToast.show();
+      Music.sound(this, R.raw.slotcoin);
+      ShowToastMessage("Ваш выигрыш: $"+prize);
+      AddMoney(prize);
     }
-    
-    //Добавление денег
-    public void AddMoney(int money)
-    {
-    	balance += money;
-        tvBalance.setText("$"+balance); 
-    }
+  }
+  //Функция проверки выигрыша
+  public int CheckPrize (int imageNum[])
+  {
+    if (imageNum[0]==imageNum[1] && imageNum[1]==imageNum[2]) return imageNum[1]*2;
+    if (imageNum[0]==imageNum[1] || imageNum[1]==imageNum[2]) return imageNum[1];
+    if (imageNum[0]==imageNum[2]) return imageNum[0];
+    return 0;
+  }
+  //Функция вывода сообещния на экран
+  public void ShowToastMessage(String s)
+  {
+    Toast msgToast = Toast.makeText(getApplicationContext(), 
+         s, Toast.LENGTH_SHORT);
+    msgToast.setGravity(Gravity.CENTER, 0, 0);
+    msgToast.show();
+  }
+  
+  //Добавление денег
+  public void AddMoney(int money)
+  {
+    balance += money;
+    tvBalance.setText("$"+balance); 
+  }
 
-    //Включение музыки при возврате или заходе в игру
-    @Override
-    protected void onResume() 
+  //Включение музыки при возврате или заходе в игру
+  @Override
+  protected void onResume() 
+  {
+     super.onResume();
+     Music.play(this, R.raw.main);
+  }
+  
+  //Отключение музыки при паузе или выходе
+  @Override
+  protected void onPause() 
+  {
+     super.onPause();
+     SaveBalance(balance);
+     Music.stop(this);
+  }
+  
+  //Создание окна выхода из приложения
+  @Override
+  public void onBackPressed() 
+  {
+    new AlertDialog.Builder(this)
+    .setTitle("Выход из приложения")
+    .setMessage("Вы действительно хотите выйти?")
+    .setNegativeButton("НЕТ", null)
+    .setPositiveButton("ДА", new OnClickListener() 
     {
-       super.onResume();
-       Music.play(this, R.raw.main);
-    }
-    
-    //Отключение музыки при паузе или выходе
-    @Override
-    protected void onPause() 
+      public void onClick(DialogInterface arg0, int arg1) 
+      {
+        finish(); //Очищает память от данного Activity
+      }
+    }).create().show();
+  }
+  
+  //Сохранение данных
+  public void SaveBalance(int balance)
+  {
+    sPref = getSharedPreferences("FruitMachin_data", MODE_PRIVATE);
+    Editor ed = sPref.edit();
+    ed.putInt("Balance", balance);
+    ed.commit();
+  }
+  
+  //Загрузка сохранённых данных
+  public void LoadBalance()
+  {
+    sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
+    balance = sPref.getInt("Balance", 150); //150 <-- стартовый баланс при первом запуске
+    tvBalance.setText("$"+balance);
+  }
+  
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) 
+  {
+    getMenuInflater().inflate(R.menu.activity_main, menu);
+    return true;
+  }
+  
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item)
+  {
+    // Операции для выбранного пункта меню
+    switch (item.getItemId()) 
     {
-       super.onPause();
-       SaveBalance(balance);
-       Music.stop(this);
-    }
-	
-	//Создание окна выхода из приложения
-	@Override
-	public void onBackPressed() 
-	{
-		new AlertDialog.Builder(this)
-		.setTitle("Выход из приложения")
-		.setMessage("Вы действительно хотите выйти?")
-		.setNegativeButton("НЕТ", null)
-		.setPositiveButton("ДА", new OnClickListener() 
-		{
-			public void onClick(DialogInterface arg0, int arg1) 
-			{
-				finish(); //Очищает память от данного Activity
-			}
-		}).create().show();
-	}
-	
-	//Сохранение данных
-	public void SaveBalance(int balance)
-	{
-		sPref = getSharedPreferences("FruitMachin_data", MODE_PRIVATE);
-		Editor ed = sPref.edit();
-		ed.putInt("Balance", balance);
-		ed.commit();
-	}
-	
-	//Загрузка сохранённых данных
-	public void LoadBalance()
-	{
-		sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
-		balance = sPref.getInt("Balance", 150); //150 <-- стартовый баланс при первом запуске
-		tvBalance.setText("$"+balance);
-	}
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) 
-    {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+      case R.id.menu_AddMoney:
+        AddMoney(500);
+        Music.sound(this, R.raw.kassa);
         return true;
+      default: return super.onOptionsItemSelected(item);
     }
-	
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-    	// Операции для выбранного пункта меню
-        switch (item.getItemId()) 
-    	{
-			case R.id.menu_AddMoney:
-				AddMoney(500);
-				Music.sound(this, R.raw.kassa);
-				return true;
-			default: return super.onOptionsItemSelected(item);
-        }
-    }
+  }
 }
