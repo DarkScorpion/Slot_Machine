@@ -21,19 +21,19 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity 
 {
-  final static int FRUIT_NUMBER = 3;
-  final static int STANDART_BET = 5;
-  final static int MAXIMAL_BET = 1000;
+  final int FRUIT_NUMBER = 3;
+  final int STANDART_BET = 1;
+  final int MAXIMAL_BET = 50;
   
   int bet = STANDART_BET;
-  int balance, imageArrSize, i;
+  int balance, imageArrSize;
   Random rndNum = new Random();
   SharedPreferences sPref;
   TextView tvBet, tvBalance;
   Button btnBetUp, btnBetDown, btnStart;
   
   //Массив сссылок на картинки
-  private int [] imageId = 
+  private int imageId[] = 
   {
     R.drawable.fruit00, //Нулевая фишка
     R.drawable.fruit01,
@@ -57,6 +57,8 @@ public class MainActivity extends Activity
     btnStart = (Button)findViewById(R.id.buttonStart);
     tvBet = (TextView)findViewById(R.id.textViewBet);
     tvBalance = (TextView)findViewById(R.id.textViewBalance);
+    //Иницилизация переменных и UI
+    tvBet.setText("$"+bet);
     LoadBalance(); //Загружаем ранее сохронённый баланс
 
   }
@@ -112,7 +114,7 @@ public class MainActivity extends Activity
         AnimationUtils.loadAnimation(this, R.anim.alpha_anim)
     };
     //Создание случайного набора чисел и вывод в виде картинок.
-    for(i=0;i<FRUIT_NUMBER;i++)
+    for(int i=0;i<FRUIT_NUMBER;i++)
     {
       randBuffer[i] = rndNum.nextInt(imageArrSize);
       ivFruit[i].setImageResource(imageId[randBuffer[i]]);
@@ -137,10 +139,10 @@ public class MainActivity extends Activity
     return 0;
   }
   //Функция вывода сообещния на экран
-  public void ShowToastMessage(String s)
+  public void ShowToastMessage(String str)
   {
     Toast msgToast = Toast.makeText(getApplicationContext(), 
-         s, Toast.LENGTH_SHORT);
+         str, Toast.LENGTH_SHORT);
     msgToast.setGravity(Gravity.CENTER, 0, 0);
     msgToast.show();
   }
@@ -199,7 +201,7 @@ public class MainActivity extends Activity
   public void LoadBalance()
   {
     sPref = getSharedPreferences("FruitMachin_data",MODE_PRIVATE);
-    balance = sPref.getInt("Balance", 150); //150 <-- стартовый баланс при первом запуске
+    balance = sPref.getInt("Balance", 50); //50 <-- стартовый баланс
     tvBalance.setText("$"+balance);
   }
   

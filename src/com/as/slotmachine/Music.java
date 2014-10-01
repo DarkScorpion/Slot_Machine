@@ -18,8 +18,6 @@ public class Music
   
   public static void sound (Context context, int resource) 
   {
-    //int soundID = sp.load(context, resource,1);
-    //sp.play(soundID, 1, 0, 1, 0, 1f);
     sp = MediaPlayer.create(context, resource);
     sp.start();
   }
